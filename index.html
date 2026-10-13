@@ -1,0 +1,729 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="Money Manager — a simple, smart, personal way to track income, expenses, and loans.">
+
+  <title>Money Manager — Simple. Smart. Personal.</title>
+
+  <link rel="icon" href="assets/logo.png" type="image/png">
+
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --surface: #ffffff;
+      --ink: #17231d;
+      --muted: #646b71;
+      --brand: #17456b;
+      --brand-dark: #103554;
+      --line: #e5e9e5;
+      --soft: #eaf4ee;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+        BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .wrap {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      padding: 22px 0;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 750;
+      letter-spacing: -.03em;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      object-fit: contain;
+    }
+
+    .brand-name {
+      font-size: 20px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .nav-link {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 650;
+      transition: color .2s;
+    }
+
+    .nav-link:hover {
+      color: var(--brand);
+    }
+
+    .hero {
+      padding: 58px 0 54px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--brand-dark);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(42px, 6vw, 68px);
+      line-height: 1.04;
+      letter-spacing: -.055em;
+      margin: 20px 0 18px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: 18px;
+      max-width: 580px;
+      margin: 0 0 26px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      min-height: 50px;
+      padding: 0 20px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 750;
+      border: 1px solid transparent;
+      transition: transform .15s, background .15s;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .primary {
+      background: var(--brand);
+      color: #fff;
+    }
+
+    .primary:hover {
+      background: var(--brand-dark);
+    }
+
+    .secondary {
+      background: var(--surface);
+      border-color: var(--line);
+    }
+
+    .secondary:hover {
+      background: var(--soft);
+    }
+
+    .small-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 13px;
+    }
+
+    .preview {
+      min-height: 330px;
+      background: linear-gradient(145deg, #e5f2e9, #fdfdfb 70%);
+      border: 1px solid #e2ebe4;
+      border-radius: 30px;
+      padding: 28px;
+      display: grid;
+      place-items: center;
+    }
+
+    .mock-card {
+      width: min(100%, 300px);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: 0 20px 60px #153d2512;
+      transform: rotate(2deg);
+    }
+
+    .mock-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .balance {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.04em;
+      margin: 12px 0 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat {
+      background: #f7f9f7;
+      border-radius: 14px;
+      padding: 13px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 16px;
+      color: var(--ink);
+      margin-top: 4px;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section h2 {
+      font-size: clamp(27px, 4vw, 36px);
+      letter-spacing: -.04em;
+      margin: 0 0 10px;
+      line-height: 1.2;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin: 0 0 26px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 22px;
+    }
+
+    .feature .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--soft);
+      color: var(--brand);
+      font-size: 21px;
+      margin-bottom: 15px;
+    }
+
+    .feature h3 {
+      font-size: 17px;
+      margin: 0 0 7px;
+    }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .download-panel {
+      background: #17283c;
+      color: white;
+      border-radius: 26px;
+      padding: 32px;
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .download-panel h2 {
+      margin: 0;
+      font-size: clamp(24px, 4vw, 32px);
+      line-height: 1.25;
+    }
+
+    .download-panel p {
+      color: #d2e1d8;
+      margin: 6px 0 0;
+    }
+
+    .download-panel .primary {
+      background: #fff;
+      color: #172b3c;
+      flex-shrink: 0;
+    }
+
+    .download-panel .primary:hover {
+      background: #edf5ef;
+    }
+
+    .notice {
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 18px;
+    }
+
+    /* Contact section */
+
+    .contact-card {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 28px;
+      max-width: 680px;
+    }
+
+    .contact-card .icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--soft);
+      color: var(--brand);
+      font-size: 23px;
+      margin-bottom: 16px;
+    }
+
+    .contact-card h3 {
+      margin: 0 0 8px;
+      font-size: 21px;
+    }
+
+    .contact-card p {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .contact-email {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--brand);
+      font-weight: 700;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+    }
+
+    .contact-email:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 34px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .footer-credit {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .footer-country {
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        padding-top: 30px;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .preview {
+        min-height: 270px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .download-panel {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .download-panel .button {
+        width: 100%;
+      }
+
+      .nav {
+        gap: 14px;
+      }
+
+      .nav-link {
+        font-size: 12px;
+      }
+
+      .contact-card {
+        padding: 22px;
+      }
+
+      .footer-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="wrap header-row">
+      <a class="brand" href="#" aria-label="Money Manager home">
+        <img src="assets/logo.png" alt="Money Manager logo">
+        <span class="brand-name">Money Manager</span>
+      </a>
+
+      <nav class="nav" aria-label="Main navigation">
+        <a class="nav-link" href="#features">Features</a>
+        <a class="nav-link" href="#download">Download</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero section -->
+    <section class="hero">
+      <div class="wrap hero-grid">
+
+        <div>
+          <span class="eyebrow">✦ Personal finance, made simple</span>
+
+          <h1>Know your money.<br>Own your plan.</h1>
+
+          <p class="lead">
+            A simple, smart and personal way to keep track of your income,
+            expenses, loans and everyday financial activity.
+          </p>
+
+          <div class="actions">
+            <a class="button primary"
+               href="downloads/application-7cc7f18a-a3b6-49cf-a75b-967bc8b90c79.apk"
+               download>
+              ↓ &nbsp; Download for Android
+            </a>
+
+            <a class="button secondary" href="#features">
+              Explore features
+            </a>
+          </div>
+
+          <p class="small-note">
+            Android APK · Version 1.0.0 · Free to download
+          </p>
+        </div>
+
+        <!-- Dashboard preview -->
+        <div class="preview"
+             role="img"
+             aria-label="Illustration of a personal finance dashboard">
+
+          <div class="mock-card">
+            <div class="mock-top">
+              <span>MY MONEY</span>
+              <span>•••</span>
+            </div>
+
+            <div class="balance">
+              Your finances,<br>in one place.
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                Income
+                <strong>Track it</strong>
+              </div>
+
+              <div class="stat">
+                Expenses
+                <strong>Understand it</strong>
+              </div>
+
+              <div class="stat">
+                Loans
+                <strong>Manage them</strong>
+              </div>
+
+              <div class="stat">
+                Reports
+                <strong>Review trends</strong>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Features section -->
+    <section class="section" id="features">
+      <div class="wrap">
+
+        <h2>Everything at a glance</h2>
+
+        <p class="section-intro">
+          The everyday tools you need to stay aware of your money.
+        </p>
+
+        <div class="features">
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">↗</div>
+            <h3>Income &amp; expenses</h3>
+            <p>
+              Record transactions, organize them by category,
+              and review recent activity.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">◷</div>
+            <h3>Loans &amp; payments</h3>
+            <p>
+              Keep track of money borrowed or lent, repayments,
+              and remaining balances.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">▥</div>
+            <h3>Reports &amp; insights</h3>
+            <p>
+              Review your financial activity with summaries
+              and reports.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">◉</div>
+            <h3>Your preferred currency</h3>
+            <p>
+              Choose from supported currencies to view amounts
+              in a familiar format.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">☾</div>
+            <h3>Comfortable themes</h3>
+            <p>
+              Choose light, dark, or system appearance to suit
+              your preference.
+            </p>
+          </article>
+
+          <article class="feature">
+            <div class="icon" aria-hidden="true">▣</div>
+            <h3>Local transaction storage</h3>
+            <p>
+              Your transaction records are stored locally
+              on your device.
+            </p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Download section -->
+    <section class="section" id="download">
+      <div class="wrap">
+
+        <div class="download-panel">
+          <div>
+            <h2>Make money management a habit.</h2>
+            <p>
+              Download Money Manager for Android and get started.
+            </p>
+          </div>
+
+          <a class="button primary"
+             href="downloads/application-7cc7f18a-a3b6-49cf-a75b-967bc8b90c79.apk"
+             download>
+            ↓ &nbsp; Download APK
+          </a>
+        </div>
+
+        <div class="notice">
+          <strong>Installation note:</strong>
+          This app is distributed directly as an APK, not through Google Play.
+          Android may ask you to allow installation from the browser or file
+          manager used to download it. Only install APKs from a source you trust.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Contact Us section -->
+    <section class="section" id="contact">
+      <div class="wrap">
+
+        <h2>Contact Us</h2>
+
+        <p class="section-intro">
+          Have a question, found an issue, or have a suggestion?
+          I'd love to hear from you.
+        </p>
+
+        <div class="contact-card">
+
+          <div class="icon" aria-hidden="true">✉</div>
+
+          <h3>Let's get in touch</h3>
+
+          <p>
+            For questions, feedback, bug reports, or support regarding
+            Money Manager, feel free to send me an email.
+          </p>
+
+          <a class="button primary"
+             href="mailto:kawyanvvw@gmail.com?subject=Money%20Manager%20Support">
+            ✉ &nbsp; Contact by Email
+          </a>
+
+          <br>
+
+          <a class="contact-email" href="mailto:kawyanvvw@gmail.com">
+            kawyanvvw@gmail.com
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footer-row">
+
+      <span>
+        © <span id="year">2026</span> Money Manager
+      </span>
+
+     
+
+      <span class="footer-credit">
+        Made with love by Naduka Kawya ❤️
+      </span>
+
+      <span class="footer-country">
+        Proudly made in Sri Lanka 🇱🇰
+      </span>
+
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+  </script>
+
+</body>
+</html>

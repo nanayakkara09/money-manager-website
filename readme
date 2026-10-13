@@ -1,0 +1,30 @@
+readme = """# Money Manager download page
+
+This is a static website template for GitHub Pages.
+
+## Before publishing
+1. Replace `YOUR-USERNAME` in `index.html` with your GitHub username.
+2. Create a GitHub repository named `money-manager` (or update the download links to match your repository).
+3. Create a GitHub Release and upload your installable Android APK with the exact filename `Money-Manager.apk`.
+4. Replace `assets/logo.svg` with your actual app logo. If your logo is `logo.png`, put it in `assets/` and change the two `assets/logo.svg` references in `index.html` to `assets/logo.png`.
+5. Push these files to the repository and enable GitHub Pages in Settings → Pages → Deploy from a branch → `main` → `/ (root)`.
+
+## Important
+- Upload an installable `.apk`, not the `.aab` Play Store bundle.
+- Only share an APK you built and tested yourself.
+- The download link assumes the APK is attached to the latest GitHub Release and named exactly `Money-Manager.apk`.
+"""
+with open(os.path.join(base, "index.html"), "w", encoding="utf-8") as f:
+    f.write(html)
+with open(os.path.join(base, "assets", "logo.svg"), "w", encoding="utf-8") as f:
+    f.write(logo_svg)
+with open(os.path.join(base, "README.md"), "w", encoding="utf-8") as f:
+    f.write(readme)
+
+zip_path = "/mnt/data/money-manager-download-page.zip"
+with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+    for root, dirs, files in os.walk(base):
+        for name in files:
+            full = os.path.join(root, name)
+            z.write(full, os.path.relpath(full, base))
+print(zip_path)
